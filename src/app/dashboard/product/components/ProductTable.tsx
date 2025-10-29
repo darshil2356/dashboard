@@ -226,7 +226,9 @@ function handleDelete(id: string) {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         try {
-          const parsed: any[] = JSON.parse(saved);
+          // const parsed: any[] = JSON.parse(saved);
+          const parsed = JSON.parse(saved) as unknown as Product[];
+
           const validProducts = parsed
             .filter((p): p is Product => 
               p.id && p.name && p.sku && p.category && typeof p.stock === "number" && typeof p.price === "number" && p.status && p.added
@@ -324,7 +326,7 @@ function handleDelete(id: string) {
   useEffect(() => {
   if (products.length > 0 && columns.length === 0) {
     // Get all keys from first product
-    let keys = Object.keys(products[0])
+    const keys = Object.keys(products[0])
       .filter((k) => !["id", "created_at", "updated_at"].includes(k))
       .map((k) => (k === "name" ? "product" : k));
 
