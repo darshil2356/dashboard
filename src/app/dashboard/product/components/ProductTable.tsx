@@ -310,16 +310,34 @@ function handleDelete(id: string) {
     if (onDateChange) onDateChange(date);
   };
 
-  useEffect(() => {
-    if (products.length > 0 && columns.length === 0) {
-      const keys = Object.keys(products[0])
-        .filter((k) => !["id", "created_at", "updated_at"].includes(k))
-        .map((k) => (k === "name" ? "product" : k));
-        // .map((k) => k);
+  // useEffect(() => {
+  //   if (products.length > 0 && columns.length === 0) {
+  //     const keys = Object.keys(products[0])
+  //       .filter((k) => !["id", "created_at", "updated_at"].includes(k))
+  //       .map((k) => (k === "name" ? "product" : k));
+  //       // .map((k) => k);
 
-      setColumns(keys.map((k) => ({ name: k, visible: true })));
-    }
-  }, [products]);
+  //     setColumns(keys.map((k) => ({ name: k, visible: true })));
+  //   }
+  // }, [products]);
+
+  useEffect(() => {
+  if (products.length > 0 && columns.length === 0) {
+    // Get all keys from first product
+    let keys = Object.keys(products[0])
+      .filter((k) => !["id", "created_at", "updated_at"].includes(k))
+      .map((k) => (k === "name" ? "product" : k));
+
+    // ✅ Ensure all expected keys exist (even if missing in storage)
+    const expectedKeys = ["product", "sku", "category", "stock", "price", "status", "added"];
+    expectedKeys.forEach((k) => {
+      if (!keys.includes(k)) keys.push(k);
+    });
+
+    setColumns(keys.map((k) => ({ name: k, visible: true })));
+  }
+}, [products]);
+
 
   const total = filtered.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -609,23 +627,90 @@ function handleDelete(id: string) {
                 </div>
               )}
 
-              {columns.find(c => c.name === "category")?.visible && (
+              {/* {columns.find(c => c.name === "category")?.visible && (
                 <div className="w-28 text-sm font-medium text-gray-600 cursor-pointer" onClick={() => toggleSort("category")}>
                   Category
+                  <i className="fi fi-sr-caret-down text-[#858D9D] text-xs ml-2" />
                 </div>
               )}
 
               {columns.find(c => c.name === "stock")?.visible && (
                 <div className="w-20 text-sm font-medium text-gray-600 cursor-pointer" onClick={() => toggleSort("stock")}>
                   Stock
+                  <i className="fi fi-sr-caret-down text-[#858D9D] text-xs ml-2" />
                 </div>
               )}
 
               {columns.find(c => c.name === "price")?.visible && (
                 <div className="w-28 text-sm font-medium text-gray-600 cursor-pointer" onClick={() => toggleSort("price")}>
                   Price
+                  <i className="fi fi-sr-caret-down text-[#858D9D] text-xs ml-2" />
                 </div>
-              )}
+              )} */}
+
+
+
+
+
+
+
+{columns.find(c => c.name === "category")?.visible && (
+  <div
+    className="w-28 text-sm font-medium text-gray-600 cursor-pointer flex items-center"
+    onClick={() => toggleSort("category")}
+  >
+    Category
+    <i
+      className={`fi ${
+        sortBy.column === "category"
+          ? sortBy.dir === "asc"
+            ? "fi-sr-caret-up"
+            : "fi-sr-caret-down"
+          : "fi-sr-caret-down"
+      } text-[#858D9D] text-xs ml-2 transition-transform duration-200`}
+    />
+  </div>
+)}
+
+{columns.find(c => c.name === "stock")?.visible && (
+  <div
+    className="w-20 text-sm font-medium text-gray-600 cursor-pointer flex items-center"
+    onClick={() => toggleSort("stock")}
+  >
+    Stock
+    <i
+      className={`fi ${
+        sortBy.column === "stock"
+          ? sortBy.dir === "asc"
+            ? "fi-sr-caret-up"
+            : "fi-sr-caret-down"
+          : "fi-sr-caret-down"
+      } text-[#858D9D] text-xs ml-2 transition-transform duration-200`}
+    />
+  </div>
+)}
+
+{columns.find(c => c.name === "price")?.visible && (
+  <div
+    className="w-28 text-sm font-medium text-gray-600 cursor-pointer flex items-center"
+    onClick={() => toggleSort("price")}
+  >
+    Price
+    <i
+      className={`fi ${
+        sortBy.column === "price"
+          ? sortBy.dir === "asc"
+            ? "fi-sr-caret-up"
+            : "fi-sr-caret-down"
+          : "fi-sr-caret-down"
+      } text-[#858D9D] text-xs ml-2 transition-transform duration-200`}
+    />
+  </div>
+)}
+
+
+
+
 
               {columns.find(c => c.name === "status")?.visible && (
                 <div className="w-28 text-sm font-medium text-gray-600">
