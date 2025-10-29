@@ -170,43 +170,14 @@ useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
     setProducts(mockProducts);
   } else {
-    // try {
-    //   const parsed: Product[] = JSON.parse(saved);
-    //   setProducts(parsed);
-    // } catch {
-    //   // If corrupted storage → reset with mockProducts
-    //   localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
-    //   setProducts(mockProducts);
-    // }
-
     try {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const parsed: any[] = JSON.parse(saved);
-  const validProducts: Product[] = parsed
-    .filter((p): p is Product =>
-      p.id &&
-      p.name &&
-      p.sku &&
-      p.category &&
-      typeof p.stock === "number" &&
-      typeof p.price === "number" &&
-      p.status &&
-      p.added
-    )
-    .map((p) => ({
-      ...p,
-      status: p.status as ProductStatus,
-      stock: Math.max(0, p.stock),
-      price: Math.max(0, p.price),
-    }));
-
-  setProducts(validProducts.length ? validProducts : mockProducts);
-} catch (e) {
-  console.warn("Failed to load products from localStorage:", e);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
-  setProducts(mockProducts);
-}
-
+      const parsed: Product[] = JSON.parse(saved);
+      setProducts(parsed);
+    } catch {
+      // If corrupted storage → reset with mockProducts
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
+      setProducts(mockProducts);
+    }
   }
 }, []);
 
