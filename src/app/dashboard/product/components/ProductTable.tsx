@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo, useState, useRef, useEffect } from "react";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import FilterModal from "./FilterModal";
 import EditColumnsModal from "./EditColumnsModal";
 import UniversalDatePicker from "@/app/components/UniversalDatePicker";
@@ -125,9 +125,15 @@ export const mockProducts: Product[] = [
 ];
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20];
-const STORAGE_KEY = "mockProducts";
+// const STORAGE_KEY = "mockProducts";
 
-export default function ProductTable({ onDateChange }) {
+
+// export default function ProductTable({ onDateChange }) {
+export default function ProductTable({ 
+  onDateChange 
+}: { 
+  onDateChange?: (date: Date | null) => void 
+}) {
   // const [products, setProducts] = useState<Product[]>(() => {
   //   if (typeof window === "undefined") return mockProducts;
   //   const saved = localStorage.getItem(STORAGE_KEY);
@@ -161,20 +167,56 @@ export default function ProductTable({ onDateChange }) {
 
 const [products, setProducts] = useState<Product[]>([]);
 
+// useEffect(() => {
+//   // Load from localStorage
+//   const saved = localStorage.getItem(STORAGE_KEY);
+
+//   if (!saved) {
+//     // If nothing stored yet → write mockProducts
+//     localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
+//     setProducts(mockProducts);
+//   } else {
+//     try {
+//       const parsed: Product[] = JSON.parse(saved);
+//       setProducts(parsed);
+      
+//     } catch {
+//       // If corrupted storage → reset with mockProducts
+//       localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
+//       setProducts(mockProducts);
+//     }
+//   }
+// }, []);
+
+
 useEffect(() => {
-  // Load from localStorage
   const saved = localStorage.getItem(STORAGE_KEY);
 
   if (!saved) {
-    // If nothing stored yet → write mockProducts
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
     setProducts(mockProducts);
   } else {
     try {
-      const parsed: Product[] = JSON.parse(saved);
-      setProducts(parsed);
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        const validProducts = parsed
+          .filter((p): p is Product => 
+            p.id && p.name && p.sku && p.category && 
+            typeof p.stock === "number" && 
+            typeof p.price === "number" && 
+            p.status && p.added
+          )
+          .map((p) => ({
+            ...p,
+            status: p.status as ProductStatus,
+            stock: Math.max(0, p.stock),
+            price: Math.max(0, p.price),
+          }));
+        setProducts(validProducts);
+      } else {
+        setProducts(mockProducts);
+      }
     } catch {
-      // If corrupted storage → reset with mockProducts
       localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
       setProducts(mockProducts);
     }
@@ -194,15 +236,15 @@ function handleDelete(id: string) {
 
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState<"all" | "published" | "low" | "draft">("all");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [statusFilter, ] = useState<string>("all");
   const [sortBy, setSortBy] = useState<{ column: keyof Product | null; dir: "asc" | "desc"; }>({ column: null, dir: "asc" });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [calendarOpen, setCalendarOpen] = useState(false);
-  const [filterOpen, setFilterOpen] = useState(false);
+  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  // const [calendarOpen, setCalendarOpen] = useState(false);
+  // const [filterOpen, setFilterOpen] = useState(false);
   const [columnsModalOpen, setColumnsModalOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -215,21 +257,69 @@ function handleDelete(id: string) {
   const [priceSort, setPriceSort] = useState("");
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const filterBtnRef = useRef<HTMLButtonElement>(null);
+  
 
   const [columns, setColumns] = useState<{ name: string; visible: boolean }[]>([]);
 
   const STORAGE_KEY = "mockProducts";
 
   // Reload from localStorage on storage change (for same-tab updates) and focus (for cross-tab)
-  useEffect(() => {
-    const handleStorageOrFocus = () => {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed: any[] = JSON.parse(saved);
+  // useEffect(() => {
+  //   const handleStorageOrFocus = () => {
+  //     const saved = localStorage.getItem(STORAGE_KEY);
+  //     if (saved) {
+  //       try {
+  //         const parsed: any[] = JSON.parse(saved);
+  //         const validProducts = parsed
+  //           .filter((p): p is Product => 
+  //             p.id && p.name && p.sku && p.category && typeof p.stock === "number" && typeof p.price === "number" && p.status && p.added
+  //           )
+  //           .map((p) => ({
+  //             ...p,
+  //             status: p.status as ProductStatus,
+  //             stock: Math.max(0, p.stock),
+  //             price: Math.max(0, p.price),
+  //           }));
+  //         const merged = [...mockProducts];
+  //         validProducts.forEach((newP) => {
+  //           const existingIdx = merged.findIndex((m) => m.id === newP.id);
+  //           if (existingIdx !== -1) {
+  //             merged[existingIdx] = { ...merged[existingIdx], ...newP }; // Update existing
+  //           } else {
+  //             merged.push(newP); // Add new
+  //           }
+  //         });
+  //         setProducts(merged);
+  //         // Reset page if needed to avoid empty pages
+  //         if (page > Math.ceil(merged.length / pageSize)) setPage(1);
+  //       } catch (e) {
+  //         console.warn("Failed to reload from localStorage:", e);
+  //       }
+  //     }
+  //   };
+
+  //   window.addEventListener("storage", handleStorageOrFocus);
+  //   window.addEventListener("focus", handleStorageOrFocus);
+
+  //   return () => {
+  //     window.removeEventListener("storage", handleStorageOrFocus);
+  //     window.removeEventListener("focus", handleStorageOrFocus);
+  //   };
+  // }, [page, pageSize]);
+
+useEffect(() => {
+  const handleStorageOrFocus = () => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
           const validProducts = parsed
             .filter((p): p is Product => 
-              p.id && p.name && p.sku && p.category && typeof p.stock === "number" && typeof p.price === "number" && p.status && p.added
+              p.id && p.name && p.sku && p.category && 
+              typeof p.stock === "number" && 
+              typeof p.price === "number" && 
+              p.status && p.added
             )
             .map((p) => ({
               ...p,
@@ -241,28 +331,28 @@ function handleDelete(id: string) {
           validProducts.forEach((newP) => {
             const existingIdx = merged.findIndex((m) => m.id === newP.id);
             if (existingIdx !== -1) {
-              merged[existingIdx] = { ...merged[existingIdx], ...newP }; // Update existing
+              merged[existingIdx] = { ...merged[existingIdx], ...newP };
             } else {
-              merged.push(newP); // Add new
+              merged.push(newP);
             }
           });
           setProducts(merged);
-          // Reset page if needed to avoid empty pages
           if (page > Math.ceil(merged.length / pageSize)) setPage(1);
-        } catch (e) {
-          console.warn("Failed to reload from localStorage:", e);
         }
+      } catch (e) {
+        console.warn("Failed to reload from localStorage:", e);
       }
-    };
+    }
+  };
 
-    window.addEventListener("storage", handleStorageOrFocus);
-    window.addEventListener("focus", handleStorageOrFocus);
+  window.addEventListener("storage", handleStorageOrFocus);
+  window.addEventListener("focus", handleStorageOrFocus);
 
-    return () => {
-      window.removeEventListener("storage", handleStorageOrFocus);
-      window.removeEventListener("focus", handleStorageOrFocus);
-    };
-  }, [page, pageSize]);
+  return () => {
+    window.removeEventListener("storage", handleStorageOrFocus);
+    window.removeEventListener("focus", handleStorageOrFocus);
+  };
+}, [page, pageSize]);
 
   const filtered = useMemo(() => {
     let res = products.slice();
@@ -288,27 +378,43 @@ function handleDelete(id: string) {
     }
 
     const effectiveSort = priceSort ? { column: "price" as keyof Product, dir: priceSort } : sortBy;
-    if (effectiveSort.column) {
-      res.sort((a, b) => {
-        const col = effectiveSort.column!;
-        let av: any = a[col];
-        let bv: any = b[col];
-        if (typeof av === "string") av = av.toLowerCase();
-        if (typeof bv === "string") bv = bv.toLowerCase();
-        if (av > bv) return effectiveSort.dir === "asc" ? 1 : -1;
-        if (av < bv) return effectiveSort.dir === "asc" ? -1 : 1;
-        return 0;
-      });
+   if (effectiveSort.column) {
+  res.sort((a, b) => {
+    const col = effectiveSort.column!;
+    let av = a[col];
+    let bv = b[col];
+
+    // Handle string comparison
+    if (typeof av === "string" && typeof bv === "string") {
+      av = av.toLowerCase();
+      bv = bv.toLowerCase();
+      if (av > bv) return effectiveSort.dir === "asc" ? 1 : -1;
+      if (av < bv) return effectiveSort.dir === "asc" ? -1 : 1;
+      return 0;
     }
+
+    // Handle number comparison (like price, stock)
+    if (typeof av === "number" && typeof bv === "number") {
+      return effectiveSort.dir === "asc" ? av - bv : bv - av;
+    }
+
+    // Fallback: convert to string
+    const aStr = String(av).toLowerCase();
+    const bStr = String(bv).toLowerCase();
+    if (aStr > bStr) return effectiveSort.dir === "asc" ? 1 : -1;
+    if (aStr < bStr) return effectiveSort.dir === "asc" ? -1 : 1;
+    return 0;
+  });
+}
 
     return res;
   }, [products, activeTab, query, statusFilter, priceRange, priceSort, sortBy]);
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setCalendarOpen(false);
-    if (onDateChange) onDateChange(date);
-  };
+  // const handleDateChange = (date: Date | null) => {
+  //   setSelectedDate(date);
+  //   setCalendarOpen(false);
+  //   if (onDateChange) onDateChange(date);
+  // };
 
   // useEffect(() => {
   //   if (products.length > 0 && columns.length === 0) {
@@ -429,6 +535,9 @@ function handleDelete(id: string) {
   }, [columns]);
 
   const selectedCount = Object.values(selected).filter(Boolean).length;
+  
+
+  
   
 
   return (
@@ -556,7 +665,8 @@ function handleDelete(id: string) {
       <FilterModal
         isOpen={filterModalOpen}
         onClose={() => setFilterModalOpen(false)}
-        anchorRef={filterBtnRef}
+        // anchorRef={filterBtnRef}
+        anchorRef={filterBtnRef as React.RefObject<HTMLButtonElement>}  // <-- ADD THIS
         onApply={(min, max, sort) => {
           setPriceRange([min, max]);
           setPriceSort(sort || "");
