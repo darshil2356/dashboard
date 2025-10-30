@@ -61,7 +61,7 @@ export default function MainContent({
       <Projects />
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 p-6 gap-6 mb-6 h-[52px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 p-[4px] gap-6 mb-6 h-[52px]">
         {/* Gauge Chart - 1/3 width */}
         {/* <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-sm flex flex-col">
          */}
@@ -124,7 +124,7 @@ export default function MainContent({
         </div>
 
         {/* Line Chart - 2/3 width */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm">
+        <div className="lg:col-span-2 bg-white p-[4px] rounded-lg shadow-sm">
           {/* <Legend /> */}
           <LineChartComponent
             data={lineData}
