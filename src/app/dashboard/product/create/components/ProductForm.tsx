@@ -274,7 +274,9 @@ const handleSubmit = () => {
     price: Number(form.pricing.basePrice) || 0,
     status: form.status.toLowerCase().replace(/\s+/g, "") as
       "published" | "draft" | "low" | "out",
-    added: new Date().toISOString(),
+    // added: new Date().toISOString(),
+    added: new Date().toISOString().split("T")[0],
+
   };
 
   const saved = JSON.parse(localStorage.getItem("mockProducts") || "[]");
@@ -307,7 +309,7 @@ const handleSubmit = () => {
   return (
     <div className="">
       {/* Header */}
-      <div className="flex justify-between items-center w-full mb-2 ">
+      <div className="flex justify-between items-center w-full ">
         <h1 className="text-2xl font-semibold">
           {isEdit ? "Edit Product" : "Create Product"}
         </h1>

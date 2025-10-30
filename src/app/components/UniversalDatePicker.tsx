@@ -29,7 +29,7 @@ const UniversalDatePicker: React.FC<UniversalDatePickerProps> = ({
 
   return (
     <div className="relative inline-block">
-      <button
+      {/* <button
         onClick={() => setOpen(!open)}
         className={`flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:border-[#2086BF] hover:text-[#2086BF] transition-colors ${buttonClassName}`}
       >
@@ -39,7 +39,29 @@ const UniversalDatePicker: React.FC<UniversalDatePickerProps> = ({
             ? selectedDate.toLocaleDateString()
             : placeholder}
         </span>
-      </button>
+      </button> */}
+      <button
+  onClick={() => setOpen(!open)}
+  className={`flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:border-[#2086BF] hover:text-[#2086BF] transition-colors ${buttonClassName}`}
+>
+  <i className="fi fi-sr-calendar text-sm"></i>
+  <span className="whitespace-nowrap">
+    {selectedDate ? selectedDate.toLocaleDateString() : placeholder}
+  </span>
+
+  {/* ✅ Clear date icon (visible only when a date is selected) */}
+  {selectedDate && (
+    <i
+      className="fi fi-rr-cross-small text-gray-500 hover:text-red-500 text-sm cursor-pointer"
+      onClick={(e) => {
+        e.stopPropagation(); // prevent reopening calendar
+        setSelectedDate(null);
+        onChange?.(null);
+      }}
+    ></i>
+  )}
+</button>
+
 
       {open && (
         <div

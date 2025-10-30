@@ -241,6 +241,8 @@ function handleDelete(id: string) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
 
   // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   // const [calendarOpen, setCalendarOpen] = useState(false);
@@ -377,6 +379,15 @@ useEffect(() => {
       );
     }
 
+      // ✅ Filter by date (new)
+  if (selectedDate) {
+    // const selectedDateStr = selectedDate.toISOString().split("T")[0];
+    const selectedDateStr = selectedDate.toLocaleDateString("en-CA"); 
+// en-CA gives YYYY-MM-DD format without timezone shift
+
+    res = res.filter((p) => p.added === selectedDateStr);
+  }
+
     const effectiveSort = priceSort ? { column: "price" as keyof Product, dir: priceSort } : sortBy;
    if (effectiveSort.column) {
   res.sort((a, b) => {
@@ -408,7 +419,7 @@ useEffect(() => {
 }
 
     return res;
-  }, [products, activeTab, query, statusFilter, priceRange, priceSort, sortBy]);
+  }, [products, activeTab, query, statusFilter, priceRange, priceSort, sortBy, selectedDate]);
 
   // const handleDateChange = (date: Date | null) => {
   //   setSelectedDate(date);
@@ -639,11 +650,20 @@ useEffect(() => {
 
     {/* Date Picker */}
     <div className="relative">
-      <UniversalDatePicker
+      {/* <UniversalDatePicker
         onChange={onDateChange}
         placeholder="Select Dates"
         calendarPosition="right"
-      />
+      /> */}
+      <UniversalDatePicker
+  onChange={(date) => {
+    setSelectedDate(date);
+    if (onDateChange) onDateChange(date);
+  }}
+  placeholder="Select Dates"
+  calendarPosition="right"
+/>
+
     </div>
 
     {/* Filters */}
@@ -951,11 +971,7 @@ useEffect(() => {
   </div>
 
   {/* Checkbox */}
-  <input
-    type="checkbox"
-    checked={!!selected[p.id]}
-    onChange={() => toggleSelectOne(p.id)}
-  />
+  
 </div>
 
                     </div>
