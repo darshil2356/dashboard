@@ -37,10 +37,13 @@ const Sidebar = () => {
 
       {/* === Sidebar Container === */}
       <aside
-        className={`fixed md:static top-0 left-0 h-screen bg-white text-black shadow-sm transform transition-transform duration-300 ease-in-out z-40
+        className={`fixed md:static top-0 left-0  bg-white text-black shadow-sm transform transition-transform duration-300 ease-in-out z-40
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
-        style={{ width: "264px" }}
+        style={{
+    width: "264px",
+    height: "-webkit-fill-available",
+  }}
       >
         {/* ===== Header ===== */}
         <div className="flex items-center justify-center h-[82px] w-full px-4 md:px-0">

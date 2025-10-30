@@ -317,7 +317,7 @@ const handleSubmit = () => {
 
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
         {/* Breadcrumb */}
-        <p className="text-sm text-gray-500 flex items-center gap-x-4">
+        <p className="text-lg text-gray-500 flex items-center gap-x-4">
           <span className="text-[#2086BF]">Dashboard</span>
           <i className="fi-sr-caret-right text-xs"></i>
           <span className="text-[#2086BF]">Product List</span>

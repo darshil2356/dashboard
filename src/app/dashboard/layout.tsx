@@ -13,7 +13,7 @@ export default function DashboardLayout({
     console.log("Search:", query);
   };
   return (
-    <div className="flex h-screen bg-[#FBFBFB]">
+    <div className="flex  bg-[#FBFBFB]">
       <div className="flex-shrink-0">
         <Sidebar />
       </div>
