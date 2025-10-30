@@ -54,20 +54,13 @@ export default function MainContent({
 }: MainContentProps) {
   return (
     <main className="">
-      {/* Welcome Section */}
       <WelcomeSection user={user} onDateChange={onDateChange} />
 
-      {/* Projects */}
       <Projects />
 
-      {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 p-[4px] gap-6 mb-6 h-[52px]">
-        {/* Gauge Chart - 1/3 width */}
-        {/* <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-sm flex flex-col">
-         */}
          <div className="lg:col-span-1 bg-white p-4 lg:p-6 rounded-lg shadow-sm flex flex-col items-center lg:items-start text-center lg:text-left">
 
-          {/* Title + Three dots */}
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-lg font-semibold text-[20px] text-[#1D1F2C]">
               Target
@@ -85,17 +78,13 @@ export default function MainContent({
             unit="%"
             progressColor="#2BB2FE"
             trackColor="#2086BF"
-            // width={100%}
-            // height={250}
           />
 
-          {/* Summary text */}
           <p className="text-[14px] font-normal text-[#667085]">
             You succeed earn <span className="font-semibold">$240</span> today,
             it's higher than yesterday
           </p>
 
-          {/* Metrics table */}
           <div className="grid grid-cols-3 text-center  pt-2">
             <div className=" flex flex-col items-center">
               <p className="text-[12px] font-medium text-[#667085]">Target</p>
@@ -123,9 +112,7 @@ export default function MainContent({
           </div>
         </div>
 
-        {/* Line Chart - 2/3 width */}
         <div className="lg:col-span-2 bg-white p-[4px] rounded-lg shadow-sm">
-          {/* <Legend /> */}
           <LineChartComponent
             data={lineData}
             lines={lineLines}

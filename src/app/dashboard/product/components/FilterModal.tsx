@@ -54,41 +54,34 @@ export default function FilterModal({
 
   if (!isOpen) return null;
 
-  // helpers to keep a minimum gap between handles
   const MIN_GAP = 50;
 
   const handleClearAll = () => {
     setMin(0);
     setMax(10000);
     setSort("");
-    setSearchQuery(""); // NEW: Clear search too
-    if (onSearchChange) onSearchChange(""); // Apply clear
-    onApply(0, 10000, ""); // FIXED: Apply reset to parent
+    setSearchQuery(""); 
+    if (onSearchChange) onSearchChange(""); 
+    onApply(0, 10000, ""); 
   };
 
   return (
     <>
-      {/* overlay to close on click outside (semi-transparent) */}
       <div className="fixed inset-0 z-[998]  bg-opacity-10" onClick={onClose} />
 
-      {/* modal */}
-      {/* <div
-        className="fixed z-[9999] w-[320px] bg-white border border-gray-200 rounded-2xl shadow-lg p-4"
-        style={{ top: position.top, left: position.left }}
-      > */}
+    
       <div
-        className={`fixed z-[9999] w-[320px] bg-white border border-gray-200 rounded-2xl shadow-lg p-4 transition-all duration-300 ease-in-out`} // Bump duration for smoother expand
+        className={`fixed z-[9999] w-[320px] bg-white border border-gray-200 rounded-2xl shadow-lg p-4 transition-all duration-300 ease-in-out`} 
 
         style={{
           top: position.top,
           left: position.left,
           maxHeight: "90vh",
           overflowY: "auto",
-          overflowX: "visible", // allow dropdowns to expand horizontally if needed
+          overflowX: "visible", 
           
         }}
       >
-        {/* header */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-semibold text-gray-800">Filter</h3>
@@ -103,7 +96,6 @@ export default function FilterModal({
           </div>
         </div>
 
-        {/* Search box (blue inner border like image, now functional) */}
         <input
           type="text"
           placeholder="Search"
@@ -112,7 +104,6 @@ export default function FilterModal({
           className="w-full border border-[#CDEDF9] outline-none rounded-md px-3 py-2 text-sm mb-3 focus:border-[#2086BF]"
         />
 
-        {/* checkboxes for sort (fixed labels) */}
         <div className="flex flex-col gap-2 text-sm text-gray-700 mb-3">
           <label className="flex items-center gap-2">
             <input
@@ -132,20 +123,16 @@ export default function FilterModal({
           </label>
         </div>
 
-        {/* FIXED: Single bar with two draggable handles + visible blue bar */}
         <div className="mb-2">
           <div className="relative h-6">
-            {/* background track */}
             <div className="absolute left-0 right-0 top-1/2 h-[6px] bg-gray-200 rounded-full -translate-y-1/2" />
-            {/* active range bar - now properly sized */}
             <div
               className="absolute top-1/2 h-[6px] bg-[#2086BF] rounded-full -translate-y-1/2"
               style={{
-                left: `${(min / 10000) * 100}%`, // FIXED: Scale to 1000 max
+                left: `${(min / 10000) * 100}%`, 
                 width: `${((max - min) / 10000) * 100}%`,
               }}
             />
-            {/* left handle (min) - FIXED: Visible, draggable */}
             <input
               type="range"
               min={0}
@@ -165,7 +152,6 @@ export default function FilterModal({
                 transform: "translateY(-50%)",
               }}
             />
-            {/* Custom thumb for left handle */}
             <style jsx>{`
               input[type="range"]::-webkit-slider-thumb {
                 -webkit-appearance: none;
@@ -187,7 +173,6 @@ export default function FilterModal({
                 cursor: pointer;
               }
             `}</style>
-            {/* right handle (max) - FIXED: Same as left */}
             <input
               type="range"
               min={0}
@@ -198,7 +183,7 @@ export default function FilterModal({
                 const bounded = Math.max(v, min + MIN_GAP);
                 setMax(bounded);
               }}
-              className="absolute w-full h-6 appearance-none pointer-events-auto z-40 ml-[16px]" // Offset to avoid overlap
+              className="absolute w-full h-6 appearance-none pointer-events-auto z-40 ml-[16px]" 
               style={{
                 background: "transparent",
                 WebkitAppearance: "none",
@@ -209,14 +194,12 @@ export default function FilterModal({
             />
           </div>
 
-          {/* numeric labels under bar */}
           <div className="flex justify-between text-xs text-gray-600 mt-2 mb-3">
             <span>${min}</span>
             <span>${max}</span>
           </div>
         </div>
 
-        {/* numeric input boxes like image */}
         <div className="grid grid-cols-2 gap-3 mb-3">
           <input
             type="number"
@@ -242,22 +225,13 @@ export default function FilterModal({
           />
         </div>
 
-        {/* dropdown (styled like image) - not wired yet, but kept */}
-        {/* <div className="mb-3">
-          <select className="w-full border border-[#CDEDF9] rounded-md px-3 py-2 text-sm focus:border-[#2086BF]">
-            <option>(=) Equals</option>
-            <option>(&lt;) Less Than</option>
-            <option>(&gt;) Greater Than</option>
-            <option>(&lt;=) Less Than Equal</option>
-            <option>(&gt;=) Greater Than Equal</option>
-          </select>
-        </div> */}
+     
 
         <div className="mb-3 relative">
           <select
             className="w-full border border-[#CDEDF9] rounded-md px-3 py-2 text-sm focus:border-[#2086BF]"
-            onClick={() => setDropdownOpen((prev) => !prev)} // toggle on click
-            onBlur={() => setDropdownOpen(false)} // close when focus lost
+            onClick={() => setDropdownOpen((prev) => !prev)} 
+            onBlur={() => setDropdownOpen(false)} 
           >
             <option>(=) Equals</option>
             <option>(&lt;) Less Than</option>

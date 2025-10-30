@@ -20,7 +20,11 @@ export default function DashboardPage() {
       </div>
 
       {/* Right-side Content */}
-      <div className="flex-1 flex flex-col">
+     <div
+  className="flex-1 flex flex-col"
+  style={{ width: "-webkit-fill-available !important" }}
+>
+
         {/* Header */}
         <Header
           user={{ name: "Om Patel" }}

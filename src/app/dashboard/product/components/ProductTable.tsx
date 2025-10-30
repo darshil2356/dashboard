@@ -404,12 +404,10 @@ useEffect(() => {
       return 0;
     }
 
-    // Handle number comparison (like price, stock)
     if (typeof av === "number" && typeof bv === "number") {
       return effectiveSort.dir === "asc" ? av - bv : bv - av;
     }
 
-    // Fallback: convert to string
     const aStr = String(av).toLowerCase();
     const bStr = String(bv).toLowerCase();
     if (aStr > bStr) return effectiveSort.dir === "asc" ? 1 : -1;
@@ -421,31 +419,14 @@ useEffect(() => {
     return res;
   }, [products, activeTab, query, statusFilter, priceRange, priceSort, sortBy, selectedDate]);
 
-  // const handleDateChange = (date: Date | null) => {
-  //   setSelectedDate(date);
-  //   setCalendarOpen(false);
-  //   if (onDateChange) onDateChange(date);
-  // };
 
-  // useEffect(() => {
-  //   if (products.length > 0 && columns.length === 0) {
-  //     const keys = Object.keys(products[0])
-  //       .filter((k) => !["id", "created_at", "updated_at"].includes(k))
-  //       .map((k) => (k === "name" ? "product" : k));
-  //       // .map((k) => k);
-
-  //     setColumns(keys.map((k) => ({ name: k, visible: true })));
-  //   }
-  // }, [products]);
 
   useEffect(() => {
   if (products.length > 0 && columns.length === 0) {
-    // Get all keys from first product
     const keys = Object.keys(products[0])
       .filter((k) => !["id", "created_at", "updated_at"].includes(k))
       .map((k) => (k === "name" ? "product" : k));
 
-    // ✅ Ensure all expected keys exist (even if missing in storage)
     const expectedKeys = ["product", "sku", "category", "stock", "price", "status", "added"];
     expectedKeys.forEach((k) => {
       if (!keys.includes(k)) keys.push(k);
@@ -631,7 +612,6 @@ useEffect(() => {
                 </button>
               </div>
             </div>
-            {/* <div className="flex items-center gap-3"> */}
           <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4">
 
   {/* Search Bar */}
@@ -645,16 +625,12 @@ useEffect(() => {
     />
   </div>
 
-  {/* Group the remaining actions */}
+ 
   <div className="flex flex-row items-center gap-2 w-full md:w-auto">
 
-    {/* Date Picker */}
+ 
     <div className="relative">
-      {/* <UniversalDatePicker
-        onChange={onDateChange}
-        placeholder="Select Dates"
-        calendarPosition="right"
-      /> */}
+     
       <UniversalDatePicker
   onChange={(date) => {
     setSelectedDate(date);
@@ -666,7 +642,6 @@ useEffect(() => {
 
     </div>
 
-    {/* Filters */}
     <div className="relative">
       <button
         ref={filterBtnRef}
@@ -697,7 +672,6 @@ useEffect(() => {
       />
     </div>
 
-    {/* Edit Columns (hide on mobile) */}
     <button
       ref={btnRef}
       onClick={(e) => {
@@ -757,27 +731,7 @@ useEffect(() => {
                 </div>
               )}
 
-              {/* {columns.find(c => c.name === "category")?.visible && (
-                <div className="w-28 text-sm font-medium text-gray-600 cursor-pointer" onClick={() => toggleSort("category")}>
-                  Category
-                  <i className="fi fi-sr-caret-down text-[#858D9D] text-xs ml-2" />
-                </div>
-              )}
-
-              {columns.find(c => c.name === "stock")?.visible && (
-                <div className="w-20 text-sm font-medium text-gray-600 cursor-pointer" onClick={() => toggleSort("stock")}>
-                  Stock
-                  <i className="fi fi-sr-caret-down text-[#858D9D] text-xs ml-2" />
-                </div>
-              )}
-
-              {columns.find(c => c.name === "price")?.visible && (
-                <div className="w-28 text-sm font-medium text-gray-600 cursor-pointer" onClick={() => toggleSort("price")}>
-                  Price
-                  <i className="fi fi-sr-caret-down text-[#858D9D] text-xs ml-2" />
-                </div>
-              )} */}
-
+           
 
 
 
@@ -915,9 +869,7 @@ useEffect(() => {
                   <button className="text-[#A3A9B6]">
                     <i className="fi fi-sr-eye text-sm"></i>
                   </button>
-                  {/* <button className="text-[#A3A9B6]">
-                    <i className="fi fi-sr-trash text-sm"></i>
-                  </button> */}
+            
 
                   <button onClick={() => handleDelete(p.id)} className="text-[#A3A9B6]">
   <i className="fi fi-sr-trash text-sm"></i>
@@ -945,16 +897,9 @@ useEffect(() => {
                           {p.category} • SKU {p.sku}
                         </div>
                       </div>
-                      {/* <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={!!selected[p.id]}
-                          onChange={() => toggleSelectOne(p.id)}
-                        />
-                      </div> */}
+                     
 
                       <div className="flex items-center gap-2">
-  {/* Action Buttons (Mobile Only) */}
   <div className="flex items-center gap-2">
     <button
       onClick={() => router.push(`/dashboard/product/create/${p.id}`)}

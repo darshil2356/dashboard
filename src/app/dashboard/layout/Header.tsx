@@ -28,7 +28,6 @@ const Header: React.FC<HeaderProps> = ({
 
   const toggleArrow = () => setArrowUp(!arrowUp);
 
-  // Flaticons
   const SearchIcon = <i className="fi fi-rr-search text-[#858D9D] w-6 h-6" />;
   const CalendarIcon = (
     <i className="fi fi-sr-calendar w-6 h-6 text-[#858D9D]" />
@@ -48,7 +47,6 @@ const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    // <header className="flex items-center justify-between bg-[#FBFBFB]  p-6 h-[40px] w-full">
     <header
       className="
   
@@ -77,17 +75,12 @@ const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Right: Icons + Profile */}
-      {/* <div className="flex items-center ml-4"> */}
       <div className="flex items-center justify-end sm:justify-normal ml-0 sm:ml-4 w-full sm:w-auto  ">
-        {/* Action Icons */}
         <div className="hidden md:flex items-center space-x-4">
-          {/* Calendar */}
+      
           <div className="w-[40px] h-[40px] flex items-center justify-center rounded hover:bg-gray-100">
             {CalendarIcon}
           </div>
-
-          {/* Notifications with badge */}
           <div className="relative w-[40px] h-[40px] flex items-center justify-center rounded hover:bg-gray-100">
             {BellIcon}
             {badges.notifications && badges.notifications > 0 && (
@@ -130,17 +123,13 @@ const Header: React.FC<HeaderProps> = ({
           <span className="text-sm font-medium text-[#4A4C56]">
             {user?.name}
           </span>
-          {/* Flaticon arrow 24x24 */}
-          {/* <div className="w-6 h-6">{ArrowIcon}</div>
-           */}
-          {/* Flaticon arrow 24x24 */}
+      
           <div className="w-6 h-6 flex items-center justify-center">
             <i
               className={`fi ${
                 arrowUp ? "fi-sr-caret-up" : "fi-sr-caret-down"
               } text-[#858D9D] h-6 w-6`}
             />
-            {/* <i className="fi fi-sr-caret-up"></i> */}
           </div>
         </div>
       </div>

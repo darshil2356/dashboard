@@ -3,12 +3,12 @@ import React from 'react';
 import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 
 interface GaugeChartProps {
-  percentage: number; // 0-100 dynamic
-  unit?: string; // e.g., "%"
-  progressColor?: string; // e.g., "#2BB2FE" blue
-  trackColor?: string; // e.g., "#E5E7EB" gray
-  width?: number; // e.g., 300
-  height?: number; // e.g., 300
+  percentage: number; 
+  unit?: string; 
+  progressColor?: string;
+  trackColor?: string; 
+  width?: number; 
+  height?: number; 
   className?: string;
 }
 
@@ -48,7 +48,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({
               cornerRadius={10}
               minAngle={15}
             />
-            {/* Percentage text - centered above unit */}
+          
             <text
               x="50%"
               y="48%"
@@ -58,7 +58,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({
             >
               {percentage}
             </text>
-            {/* Unit text - right below percentage */}
+          
             <text
               x="65%"
               y="48%"

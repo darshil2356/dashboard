@@ -18,7 +18,7 @@ export default function DashboardLayout({
         <Sidebar />
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col w-[-webkit-fill-available]">
         <Header
           user={{ name: "Om Patel" }}
           badges={{ notifications: 3 }}

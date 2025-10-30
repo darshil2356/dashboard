@@ -21,7 +21,7 @@ interface LineChartProps {
   xKey: string;
   xLabel?: string;
   yLabel?: string;
-  yUnit?: string; // ✅ new — example: "$", "₹", "yen"
+  yUnit?: string; 
   width?: number;
   height?: number;
   className?: string;
@@ -40,7 +40,7 @@ const LineChartComponent: React.FC<LineChartProps> = ({
 
 
 <div className={`w-full h-full ${className}  `}>
-  {/* Custom Legend/Header */}
+ 
   <div className="mb-4">
      <h3 className="text-[20px] font-semibold text-gray-800">Statistic</h3>
      <div className="flex justify-between items-center mt-2">
@@ -60,28 +60,7 @@ const LineChartComponent: React.FC<LineChartProps> = ({
     </div>
   </div>
 
-  {/* Chart */}
-  {/* <ResponsiveContainer width="100%" height={300}>
-    <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 25 }}>
-      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
-      <XAxis dataKey={xKey} label={{ value: xLabel, position: 'insideBottom', offset: -5, style: { fontSize: 12 } }} tick={{ fontSize: 11, fill: '#666' }} />
-      <YAxis tickFormatter={(value) => `${yUnit}$${value}`} label={{ value: yLabel, angle: -90, position: 'insideLeft', style: { fontSize: 12 } }} tick={{ fontSize: 11, fill: '#666' }} />
-      <Tooltip formatter={(value) => `${value}${yUnit}`} />
-      {lines.map((line) => (
-        <Line
-          key={line.key}
-          type="monotone"
-          dataKey={line.key}
-          stroke={line.color}
-          strokeWidth={2}
-          name={line.label || line.key}
-          dot={{ fill: line.color, strokeWidth: 2, r: 4 }}
-          activeDot={{ r: 6, stroke: line.color, strokeWidth: 2 }}
-        />
-      ))}
-    </LineChart>
-  </ResponsiveContainer> */}
-
+ 
 
 
   <ResponsiveContainer width="100%" height={300}>

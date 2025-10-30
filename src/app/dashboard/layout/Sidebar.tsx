@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation"; // ✅ for routing
+import { useRouter, usePathname } from "next/navigation"; 
 import logo from "../../../../public/Logo.png";
 
 const Sidebar = () => {
@@ -27,7 +27,6 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* === Mobile Toggle Button === */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-[#2086BF] text-white px-3 py-2 rounded-md shadow-md focus:outline-none"
         onClick={() => setIsMobileOpen((prev) => !prev)}
@@ -35,7 +34,6 @@ const Sidebar = () => {
         {isMobileOpen ? "✕" : "☰"}
       </button>
 
-      {/* === Sidebar Container === */}
       <aside
         className={`fixed md:static top-0 left-0  bg-white text-black shadow-sm transform transition-transform duration-300 ease-in-out z-40
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
@@ -45,7 +43,6 @@ const Sidebar = () => {
     height: "-webkit-fill-available",
   }}
       >
-        {/* ===== Header ===== */}
         <div className="flex items-center justify-center h-[82px] w-full px-4 md:px-0">
           <div className="flex items-center justify-start w-full md:w-[224px] h-[34px]">
             <div
@@ -69,7 +66,6 @@ const Sidebar = () => {
           </div>
         </div>
 
-        {/* ===== Menu ===== */}
         <nav className="mt-[10px] overflow-y-auto pb-10">
           <ul>
             {menuItems.map((item) => {
@@ -111,7 +107,6 @@ const Sidebar = () => {
                     )}
                   </button>
 
-                  {/* ==== Sub Items ==== */}
                   {item.subItems && ecomOpen && (
                     <ul className="ml-6 mt-2 space-y-1">
                       {item.subItems.map((sub) => {
@@ -143,7 +138,6 @@ const Sidebar = () => {
         </nav>
       </aside>
 
-      {/* === Overlay for mobile === */}
       {isMobileOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-30 md:hidden"

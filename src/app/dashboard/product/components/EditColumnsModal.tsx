@@ -30,10 +30,8 @@ export default function EditColumnsModal({
 
   return (
     <>
-      {/* Backdrop */}
       <div className="fixed inset-0 z-[998]" onClick={onClose} />
 
-      {/* Modal */}
       <div
         className="absolute z-[999] bg-white rounded-xl shadow-xl w-[320px] p-4"
         style={{
@@ -42,7 +40,6 @@ export default function EditColumnsModal({
           left: anchorPos.left,
         }}
       >
-        {/* Header */}
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-lg font-semibold text-gray-800">
             Edit Columns
