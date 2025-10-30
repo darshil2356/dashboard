@@ -25,7 +25,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <div className="w-full h-full">
+      <div className="">
         <ResponsiveContainer width={width} height={height}>
           <RadialBarChart
             cx="50%"

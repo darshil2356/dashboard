@@ -63,7 +63,10 @@ export default function MainContent({
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 p-6 gap-6 mb-6 h-[52px]">
         {/* Gauge Chart - 1/3 width */}
-        <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-sm flex flex-col">
+        {/* <div className="lg:col-span-1 bg-white p-6 rounded-lg shadow-sm flex flex-col">
+         */}
+         <div className="lg:col-span-1 bg-white p-4 lg:p-6 rounded-lg shadow-sm flex flex-col items-center lg:items-start text-center lg:text-left">
+
           {/* Title + Three dots */}
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-lg font-semibold text-[20px] text-[#1D1F2C]">

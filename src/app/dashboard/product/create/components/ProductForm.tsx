@@ -303,7 +303,18 @@ const handleSubmit = () => {
   history.back();
 };
 
+ useEffect(() => {
+    const vp = document.querySelector('meta[name=viewport]');
+    if (vp) {
+      vp.setAttribute(
+        "content",
+        "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      );
+    }
 
+    // Remove ANY auto-focus Safari tries to do
+    document.activeElement instanceof HTMLElement && document.activeElement.blur();
+  }, []);
 
 
   return (

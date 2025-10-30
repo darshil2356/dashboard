@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
     <header
       className="
   
-   flex flex-wrap items-center justify-between
+   flex    items-center justify-between
     bg-[#FBFBFB] p-4 w-full gap-3
   "
     >
