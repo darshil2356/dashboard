@@ -10,6 +10,6 @@ html, body, #__next {
   height: 100%;
 }
 
-input, select, textarea {
+ select, textarea {
   min-height: 44px; /* prevents zoom without needing font-size 16 */
 }

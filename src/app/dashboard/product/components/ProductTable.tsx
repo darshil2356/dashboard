@@ -566,10 +566,10 @@ useEffect(() => {
           </div>
         </div>
 
-        <div className="rounded-lg px-3 py-[6px] mb-4">
+        <div className="rounded-lg px-3 py-[6px] mb-2">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
             <div className="flex items-center border border-[#E0E2E7] rounded-lg">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 whitespace-nowrap">
                 <button
                   onClick={() => setActiveTab("all")}
                   className={`px-3 py-1 rounded-md text-sm ${
@@ -582,7 +582,7 @@ useEffect(() => {
                 </button>
                 <button
                   onClick={() => setActiveTab("published")}
-                  className={`px-3 py-1 rounded-md text-sm ${
+                  className={`px-3 h-[42px] rounded-md text-sm ${
                     activeTab === "published"
                       ? "bg-[#EAF8FF] text-[#2086BF]"
                       : "bg-white text-[#667085]"
@@ -612,10 +612,10 @@ useEffect(() => {
                 </button>
               </div>
             </div>
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 flex-wrap justify-end">
 
   {/* Search Bar */}
-  <div className="flex items-center rounded-lg px-3 py-2 border border-[#E0E2E7] w-full md:w-auto">
+  <div className="flex items-center rounded-lg px-3 h-[42px] border border-[#E0E2E7] w-full md:w-auto">
     <i className="fi fi-rr-search mr-2 text-[#858D9D] flex items-center"></i>
     <input
       value={query}
